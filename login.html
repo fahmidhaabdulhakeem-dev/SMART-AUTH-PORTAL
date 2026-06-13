@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A premium, modern Login and Registration Interface with secure validations, dark mode, password strength estimator, and elegant micro-animations.">
+  <title>Sign In - Secure Auth Portal</title>
+  <!-- FontAwesome for Premium Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Theme Toggle Option -->
+  <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle light or dark theme" title="Toggle Light/Dark Mode">
+    <i class="fa-solid fa-moon"></i>
+  </button>
+  <!-- Main Auth Wrapper -->
+  <main class="auth-container">
+    <div class="auth-card" id="auth-card">
+      
+      <!-- Card Header -->
+      <div class="card-header">
+        <div class="logo-icon">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <h2>Welcome Back</h2>
+        <p>Enter your credentials to access your dashboard</p>
+      </div>
+      <!-- Login Form -->
+      <form id="login-form" novalidate>
+        
+        <!-- Email/Username Group -->
+        <div class="form-group" id="email-group">
+          <div class="label-container">
+            <label for="email">Email Address</label>
+          </div>
+          <div class="input-wrapper">
+            <input 
+              type="email" 
+              id="email" 
+              class="form-control" 
+              placeholder="e.g. alex@example.com" 
+              required
+              autocomplete="email"
+            >
+            <i class="fa-regular fa-envelope input-icon"></i>
+          </div>
+          <span class="error-message" id="email-error">
+            <i class="fa-solid fa-triangle-exclamation"></i> Please enter a valid email address.
+          </span>
+        </div>
+        <!-- Password Group -->
+        <div class="form-group" id="password-group">
+          <div class="label-container">
+            <label for="password">Password</label>
+            <a href="#" class="forgot-password-link" id="forgot-password">Forgot password?</a>
+          </div>
+          <div class="input-wrapper">
+            <input 
+              type="password" 
+              id="password" 
+              class="form-control" 
+              placeholder="••••••••" 
+              required
+              autocomplete="current-password"
+            >
+            <i class="fa-solid fa-lock input-icon"></i>
+            <button type="button" class="password-toggle" id="password-toggle" aria-label="Toggle password visibility">
+              <i class="fa-regular fa-eye"></i>
+            </button>
+          </div>
+          <span class="error-message" id="password-error">
+            <i class="fa-solid fa-triangle-exclamation"></i> Password cannot be empty.
+          </span>
+        </div>
+        <!-- Options Row (Remember Me) -->
+        <div class="options-row">
+          <label class="checkbox-container">
+            <input type="checkbox" id="remember-me">
+            <span class="checkmark"><i class="fa-solid fa-check"></i></span>
+            Remember me
+          </label>
+        </div>
+        <!-- Submit Button -->
+        <button type="submit" class="submit-btn" id="submit-btn">
+          <span class="spinner"></span>
+          <span class="btn-text">Sign In</span>
+          <i class="fa-solid fa-arrow-right-to-bracket"></i>
+        </button>
+      </form>
+      <!-- Footer navigation -->
+      <div class="card-footer">
+        <p>Don't have an account? <a href="signup.html" id="signup-link">Sign Up</a></p>
+      </div>
+    </div>
+  </main>
+  <!-- Dynamic Success Notification -->
+  <div class="toast" id="toast-notification">
+    <div class="toast-icon">
+      <i class="fa-solid fa-check"></i>
+    </div>
+    <span id="toast-message">Successfully authenticated!</span>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

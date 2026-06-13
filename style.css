@@ -1,0 +1,566 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+:root {
+  /* Colors - HSL tailored palette */
+  --hue: 250;
+  
+  /* Light Theme Variables */
+  --bg-gradient: linear-gradient(135deg, hsl(var(--hue), 80%, 95%) 0%, hsl(280, 80%, 93%) 100%);
+  --card-bg: rgba(255, 255, 255, 0.45);
+  --card-border: rgba(255, 255, 255, 0.6);
+  --text-primary: hsl(var(--hue), 40%, 15%);
+  --text-secondary: hsl(var(--hue), 20%, 40%);
+  --input-bg: rgba(255, 255, 255, 0.7);
+  --input-border: rgba(var(--hue), 20%, 80%, 0.3);
+  --input-text: hsl(var(--hue), 40%, 15%);
+  --input-focus-border: hsl(var(--hue), 70%, 60%);
+  --input-focus-glow: rgba(108, 92, 231, 0.15);
+  
+  --primary-color: hsl(var(--hue), 70%, 55%);
+  --primary-hover: hsl(var(--hue), 75%, 48%);
+  --primary-text: #ffffff;
+  
+  --error-color: hsl(0, 80%, 60%);
+  --error-bg: rgba(255, 76, 76, 0.1);
+  --success-color: hsl(145, 80%, 40%);
+  --warning-color: hsl(40, 95%, 55%);
+  
+  --shadow-color: rgba(31, 38, 135, 0.08);
+  --card-shadow: 0 8px 32px 0 var(--shadow-color);
+  --inset-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.04);
+  
+  --theme-btn-bg: rgba(255, 255, 255, 0.6);
+  --theme-btn-hover: rgba(255, 255, 255, 0.9);
+  --theme-btn-text: hsl(var(--hue), 40%, 25%);
+  
+  --glass-blur: 16px;
+  --radius-lg: 20px;
+  --radius-md: 12px;
+  --transition-smooth: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --transition-fast: all 0.2s ease;
+}
+[data-theme="dark"] {
+  /* Dark Theme Variables */
+  --bg-gradient: linear-gradient(135deg, hsl(var(--hue), 40%, 6%) 0%, hsl(290, 40%, 4%) 100%);
+  --card-bg: rgba(20, 18, 30, 0.45);
+  --card-border: rgba(255, 255, 255, 0.06);
+  --text-primary: hsl(var(--hue), 30%, 95%);
+  --text-secondary: hsl(var(--hue), 15%, 70%);
+  --input-bg: rgba(15, 12, 25, 0.5);
+  --input-border: rgba(255, 255, 255, 0.05);
+  --input-text: hsl(var(--hue), 30%, 95%);
+  --input-focus-border: hsl(var(--hue), 80%, 65%);
+  --input-focus-glow: rgba(108, 92, 231, 0.3);
+  
+  --primary-color: hsl(var(--hue), 75%, 62%);
+  --primary-hover: hsl(var(--hue), 80%, 55%);
+  --primary-text: #0d0c15;
+  
+  --error-color: hsl(0, 85%, 65%);
+  --error-bg: rgba(255, 99, 99, 0.12);
+  --success-color: hsl(145, 85%, 50%);
+  --warning-color: hsl(40, 100%, 60%);
+  
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --card-shadow: 0 12px 40px 0 var(--shadow-color);
+  --inset-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  
+  --theme-btn-bg: rgba(255, 255, 255, 0.07);
+  --theme-btn-hover: rgba(255, 255, 255, 0.15);
+  --theme-btn-text: hsl(var(--hue), 30%, 90%);
+}
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg-gradient);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  transition: background 0.5s ease, color 0.5s ease;
+  position: relative;
+  padding: 1.5rem;
+}
+/* Glowing background ambient spots */
+body::before,
+body::after {
+  content: '';
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  filter: blur(120px);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  transition: all 0.5s ease;
+}
+body::before {
+  top: 15%;
+  left: 15%;
+  background: hsl(var(--hue), 75%, 65%);
+}
+body::after {
+  bottom: 15%;
+  right: 15%;
+  background: hsl(290, 75%, 65%);
+}
+[data-theme="dark"]::before {
+  background: hsl(var(--hue), 60%, 25%);
+  opacity: 0.3;
+}
+[data-theme="dark"]::after {
+  background: hsl(290, 60%, 25%);
+  opacity: 0.3;
+}
+/* Theme Toggle Button (Floating) */
+.theme-toggle-btn {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  z-index: 10;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--theme-btn-bg);
+  border: 1px solid var(--card-border);
+  color: var(--theme-btn-text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: var(--transition-smooth);
+}
+.theme-toggle-btn:hover {
+  background: var(--theme-btn-hover);
+  transform: translateY(-2px) rotate(15deg);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+.theme-toggle-btn:active {
+  transform: scale(0.95);
+}
+/* Auth Container */
+.auth-container {
+  width: 100%;
+  max-width: 460px;
+  perspective: 1000px;
+  z-index: 1;
+}
+/* Main Card */
+.auth-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 2.75rem 2.5rem;
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  width: 100%;
+  transition: var(--transition-smooth);
+  animation: cardEntry 0.7s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+@keyframes cardEntry {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Exit animation used for page navigation transition */
+.auth-card.exit {
+  opacity: 0;
+  transform: translateY(-20px) scale(0.96);
+  filter: blur(4px);
+}
+/* Card Header */
+.card-header {
+  text-align: center;
+  margin-bottom: 2.25rem;
+}
+.logo-icon {
+  width: 54px;
+  height: 54px;
+  background: linear-gradient(135deg, var(--primary-color), hsl(290, 75%, 60%));
+  border-radius: var(--radius-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 8px 16px rgba(108, 92, 231, 0.3);
+  color: #ffffff;
+  font-size: 1.5rem;
+  animation: logoGlow 4s ease-in-out infinite alternate;
+}
+@keyframes logoGlow {
+  0% { box-shadow: 0 8px 16px rgba(108, 92, 231, 0.3); }
+  100% { box-shadow: 0 8px 24px rgba(108, 92, 231, 0.55), 0 0 0 4px rgba(108, 92, 231, 0.1); }
+}
+.card-header h2 {
+  font-size: 1.85rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+.card-header p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-weight: 400;
+}
+/* Forms & Inputs */
+.form-group {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+.label-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.2px;
+}
+.forgot-password-link {
+  font-size: 0.82rem;
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--transition-fast);
+}
+.forgot-password-link:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.input-icon {
+  position: absolute;
+  left: 1.15rem;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  pointer-events: none;
+  transition: var(--transition-fast);
+}
+.form-control {
+  width: 100%;
+  padding: 0.95rem 1rem 0.95rem 2.85rem;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius-md);
+  color: var(--input-text);
+  font-size: 0.95rem;
+  font-weight: 400;
+  box-shadow: var(--inset-shadow);
+  transition: var(--transition-smooth);
+}
+/* Password field spacing adjustment for eyes icon */
+.form-control[type="password"],
+.form-control.password-input {
+  padding-right: 2.85rem;
+}
+.form-control:focus {
+  outline: none;
+  border-color: var(--input-focus-border);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 0 4px var(--input-focus-glow), var(--inset-shadow);
+}
+[data-theme="dark"] .form-control:focus {
+  background: rgba(15, 12, 25, 0.85);
+}
+.form-control:focus + .input-icon,
+.form-control:not(:placeholder-shown) + .input-icon {
+  color: var(--primary-color);
+}
+/* Validation status classes */
+.form-group.success .form-control {
+  border-color: var(--success-color);
+}
+.form-group.error .form-control {
+  border-color: var(--error-color);
+  background-color: var(--error-bg);
+}
+.error-message {
+  font-size: 0.8rem;
+  color: var(--error-color);
+  margin-top: 0.4rem;
+  display: none;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+  animation: slideInError 0.25s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+@keyframes slideInError {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.form-group.error .error-message {
+  display: flex;
+}
+/* Password eye toggle */
+.password-toggle {
+  position: absolute;
+  right: 1.15rem;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: var(--transition-fast);
+}
+.password-toggle:hover {
+  color: var(--primary-color);
+}
+/* Password Strength Indicator Styles */
+.strength-container {
+  margin-top: 0.6rem;
+  margin-bottom: 0.4rem;
+  display: none;
+}
+.strength-bar-wrapper {
+  height: 5px;
+  background: var(--input-border);
+  border-radius: 3px;
+  overflow: hidden;
+  display: flex;
+  gap: 3px;
+}
+.strength-segment {
+  flex: 1;
+  height: 100%;
+  background: transparent;
+  transition: var(--transition-smooth);
+}
+.strength-text {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-top: 0.3rem;
+  display: block;
+}
+/* Strength level colors */
+.strength-weak { color: var(--error-color); }
+.strength-weak-bar { background-color: var(--error-color); }
+.strength-medium { color: var(--warning-color); }
+.strength-medium-bar { background-color: var(--warning-color); }
+.strength-strong { color: var(--success-color); }
+.strength-strong-bar { background-color: var(--success-color); }
+/* Custom Checkbox */
+.options-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.75rem;
+}
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+.checkmark {
+  height: 18px;
+  width: 18px;
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 5px;
+  margin-right: 0.65rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-fast);
+  color: var(--primary-text);
+  font-size: 0.7rem;
+}
+.checkbox-container:hover input ~ .checkmark {
+  border-color: var(--primary-color);
+}
+.checkbox-container input:checked ~ .checkmark {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+.checkbox-container input:focus-visible ~ .checkmark {
+  outline: 2px solid var(--input-focus-border);
+  outline-offset: 1px;
+}
+/* Submit Buttons */
+.submit-btn {
+  width: 100%;
+  padding: 1rem;
+  background: var(--primary-color);
+  color: var(--primary-text);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  box-shadow: 0 4px 12px rgba(108, 92, 231, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.submit-btn:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(108, 92, 231, 0.35);
+}
+.submit-btn:active {
+  transform: translateY(0);
+}
+/* Card Footer Links */
+.card-footer {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+.card-footer a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+  transition: var(--transition-fast);
+}
+.card-footer a:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+/* Terms and conditions link spacing */
+.terms-label a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+}
+.terms-label a:hover {
+  text-decoration: underline;
+}
+/* Custom Success/Toast Notification */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text-primary);
+  padding: 1rem 1.75rem;
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 100;
+  font-weight: 500;
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s;
+  opacity: 0;
+  pointer-events: none;
+}
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+.toast-icon {
+  width: 24px;
+  height: 24px;
+  background: var(--success-color);
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+/* Spinner for Loading State */
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 0.8s linear infinite;
+  display: none;
+}
+[data-theme="dark"] .spinner {
+  border-top-color: #0d0c15;
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.submit-btn.loading .spinner {
+  display: block;
+}
+.submit-btn.loading .btn-text {
+  opacity: 0.8;
+}
+/* Responsive Adaptations */
+@media (max-width: 480px) {
+  body {
+    padding: 1rem;
+  }
+  
+  .auth-card {
+    padding: 2.25rem 1.5rem;
+    border-radius: 16px;
+  }
+  
+  .theme-toggle-btn {
+    top: 1rem;
+    right: 1rem;
+    width: 42px;
+    height: 42px;
+    font-size: 1.1rem;
+  }
+  
+  .card-header h2 {
+    font-size: 1.6rem;
+  }
+  
+  .options-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .forgot-password-link {
+    align-self: flex-end;
+  }
+}
